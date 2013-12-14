@@ -28,7 +28,7 @@ default['java']['openjdk_packages'] = []
 default['java']['accept_license_agreement'] = false
 
 case node['java']['install_flavor']
-when 'ibm'
+when 'ibm', 'ibm_tar'
   default['java']['ibm']['url'] = nil
   default['java']['ibm']['checksum'] = nil
   default['java']['ibm']['accept_ibm_download_terms'] = false
