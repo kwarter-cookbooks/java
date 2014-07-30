@@ -31,7 +31,11 @@ slave_cmds = case node['java']['oracle_rpm']['type']
                Chef::Application.fatal "Unsupported oracle RPM type (#{node['java']['oracle_rpm']['type']})"
              end
 
+<<<<<<< HEAD
 if platform_family?('rhel', 'fedora')
+=======
+if platform_family?('rhel', 'fedora') and node['java']['set_default']
+>>>>>>> upstream/master
 
   bash 'update-java-alternatives' do
     java_home = node['java']['java_home']
@@ -52,5 +56,9 @@ end
 
 package node['java']['oracle_rpm']['type']  do
   action :upgrade
+<<<<<<< HEAD
   notifies :run, 'bash[update-java-alternatives]', :immediately if platform_family?('rhel', 'fedora')
+=======
+  notifies :run, 'bash[update-java-alternatives]', :immediately if platform_family?('rhel', 'fedora') and node['java']['set_default']
+>>>>>>> upstream/master
 end

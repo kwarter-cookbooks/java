@@ -1,9 +1,5 @@
-#
-# Author:: Seth Chisamore (<schisamo@opscode.com>)
 # Cookbook Name:: java
-# Recipe:: default
-#
-# Copyright 2008-2011, Opscode, Inc.
+# Recipe:: set_attributes_from_version
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,22 +12,28 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-<<<<<<< HEAD
 # Calculate variables that depend on jdk_version
 # If you need to override this in an attribute file you must use
 # force_default or higher precedence.
+
 case node['platform_family']
 when "rhel", "fedora"
-  node.default['java']['java_home'] = "/usr/lib/jvm/java"
+  case node['java']['install_flavor']
+  when "oracle"
+    node.default['java']['java_home'] = "/usr/lib/jvm/java"
+  when "oracle_rpm"
+    node.default['java']['java_home'] = "/usr/java/latest"
+  else
+    node.default['java']['java_home'] = "/usr/lib/jvm/java-1.#{node['java']['jdk_version']}.0"
+  end
   node.default['java']['openjdk_packages'] = ["java-1.#{node['java']['jdk_version']}.0-openjdk", "java-1.#{node['java']['jdk_version']}.0-openjdk-devel"]
 when "freebsd"
   node.default['java']['java_home'] = "/usr/local/openjdk#{node['java']['jdk_version']}"
   node.default['java']['openjdk_packages'] = ["openjdk#{node['java']['jdk_version']}"]
 when "arch"
   node.default['java']['java_home'] = "/usr/lib/jvm/java-#{node['java']['jdk_version']}-openjdk"
-  node.default['java']['openjdk_packages'] = ["openjdk#{node['java']['jdk_version']}}"]
+  node.default['java']['openjdk_packages'] = ["openjdk#{node['java']['jdk_version']}"]
 when "debian"
   node.default['java']['java_home'] = "/usr/lib/jvm/java-#{node['java']['jdk_version']}-#{node['java']['install_flavor']}"
   # Newer Debian & Ubuntu adds the architecture to the path
@@ -49,21 +51,3 @@ else
   node.default['java']['java_home'] = "/usr/lib/jvm/default-java"
   node.default['java']['openjdk_packages'] = ["openjdk-#{node['java']['jdk_version']}-jdk"]
 end
-
-include_recipe "java::#{node['java']['install_flavor']}"
-
-# Purge the deprecated Sun Java packages if remove_deprecated_packages is true
-%w[sun-java6-jdk sun-java6-bin sun-java6-jre].each do |pkg|
-  package pkg do
-    action :purge
-    only_if { node['java']['remove_deprecated_packages'] }
-=======
-if node['java']['install_flavor'] != 'windows'
-  if node['java']['jdk_version'].to_i == 8 and node['java']['install_flavor'] != 'oracle'
-    Chef::Application.fatal!("JDK 8 is currently only provided with the Oracle JDK")
->>>>>>> upstream/master
-  end
-end
-
-include_recipe "java::set_attributes_from_version"
-include_recipe "java::#{node['java']['install_flavor']}"
