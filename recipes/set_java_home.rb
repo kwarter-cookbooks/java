@@ -31,8 +31,6 @@ file "/etc/profile.d/jdk.sh" do
   content "export JAVA_HOME=#{node['java']['java_home']}"
   mode 00755
 end
-<<<<<<< HEAD
-=======
 
 if node['java']['set_etc_environment']
   ruby_block "Set JAVA_HOME in /etc/environment" do
@@ -44,4 +42,3 @@ if node['java']['set_etc_environment']
     end
   end
 end
->>>>>>> upstream/master

@@ -1,11 +1,6 @@
 require 'chefspec'
 
 describe 'java::windows' do
-<<<<<<< HEAD
-  let(:chef_run) { ChefSpec::ChefRunner.new.converge 'java::windows' }
-  it 'should do something' do
-    pending 'Your recipe examples go here.'
-=======
   let(:chef_run) do
     runner = ChefSpec::Runner.new(
       :platform => 'windows',
@@ -18,6 +13,5 @@ describe 'java::windows' do
   it 'should do something' do
     pending 'Your recipe examples go here.'
     this_should_not_get_executed
->>>>>>> upstream/master
   end
 end

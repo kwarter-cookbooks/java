@@ -19,37 +19,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-<<<<<<< HEAD
-jdk = Opscode::OpenJDK.new(node)
-java_location = jdk.java_location
-alternatives_priority = jdk.alternatives_priority
-
-if platform_requires_license_acceptance?
-  file "/opt/local/.dlj_license_accepted" do
-    owner "root"
-    group "root"
-    mode "0400"
-    action :create
-    only_if { node['java']['accept_license_agreement'] }
-  end
-end
-
-node['java']['openjdk_packages'].each do |pkg|
-  package pkg
-end
-
-if platform_family?('debian', 'rhel', 'fedora')
-  bash 'update-java-alternatives' do
-    code <<-EOH.gsub(/^\s+/, '')
-      update-alternatives --install /usr/bin/java java #{java_location} #{alternatives_priority} && \
-      update-alternatives --set java #{java_location}
-    EOH
-    # skip IF it's THERE and has this priority
-    not_if "update-alternatives --display java | grep '#{java_location} - priority #{alternatives_priority}'"
-  end
-end
-
-=======
 unless node.recipe?('java::default')
   Chef::Log.warn("Using java::default instead is recommended.")
 
@@ -96,7 +65,6 @@ if node['java']['set_default'] and platform_family?('debian')
   include_recipe 'java::default_java_symlink'
 end
 
->>>>>>> upstream/master
 # We must include this recipe AFTER updating the alternatives or else JAVA_HOME
 # will not point to the correct java.
 include_recipe 'java::set_java_home'

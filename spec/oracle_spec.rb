@@ -2,13 +2,8 @@ require 'spec_helper'
 
 describe 'java::oracle' do
   let(:chef_run) do
-<<<<<<< HEAD
-    runner = ChefSpec::ChefRunner.new
-    runner.converge('java::oracle')
-=======
     runner = ChefSpec::Runner.new
     runner.converge(described_recipe)
->>>>>>> upstream/master
   end
 
   it 'should include the set_java_home recipe' do
@@ -17,8 +12,6 @@ describe 'java::oracle' do
 
   it 'should configure a java_ark[jdk] resource' do
     pending "Testing LWRP use is not required at this time, this is tested post-converge."
-<<<<<<< HEAD
-=======
     this_should_not_get_executed
   end
 
@@ -79,6 +72,5 @@ describe 'java::oracle' do
         expect(chef_run).to_not include_recipe('java::default_java_symlink')
       end
     end
->>>>>>> upstream/master
   end
 end

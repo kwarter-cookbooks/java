@@ -54,11 +54,7 @@ def oracle_downloaded?(download_path, new_resource)
     require 'digest'
     if new_resource.checksum =~ /^[0-9a-f]{32}$/
       downloaded_sha =  Digest::MD5.file(download_path).hexdigest
-<<<<<<< HEAD
       downloaded_sha == new_resource.md5
-=======
-      downloaded_sha == new_resource.md5 
->>>>>>> upstream/master
     else
       downloaded_sha =  Digest::SHA256.file(download_path).hexdigest
       downloaded_sha == new_resource.checksum
@@ -82,11 +78,7 @@ def download_direct_from_oracle(tarball_name, new_resource)
     converge_by(description) do
        Chef::Log.debug "downloading oracle tarball straight from the source"
        cmd = shell_out!(
-<<<<<<< HEAD
-                                  %Q[ curl --create-dirs -L --cookie "#{cookie}" #{new_resource.url} -o #{download_path} ]
-=======
                                   %Q[ curl --create-dirs -L --retry #{new_resource.retries} --retry-delay #{new_resource.retry_delay} --cookie "#{cookie}" #{new_resource.url} -o #{download_path} ]
->>>>>>> upstream/master
                                )
     end
   else
@@ -146,12 +138,7 @@ action :install do
        case tarball_name
        when /^.*\.bin/
          cmd = shell_out(
-<<<<<<< HEAD
-                                  %Q[ cd "#{tmpdir}";
-                                      cp "#{Chef::Config[:file_cache_path]}/#{tarball_name}" . ;
-=======
                                   %Q[ cd "#{Chef::Config[:file_cache_path]}";
->>>>>>> upstream/master
                                       bash ./#{tarball_name} -noregister
                                     ] )
          unless cmd.exitstatus == 0
@@ -159,22 +146,14 @@ action :install do
          end
        when /^.*\.zip/
          cmd = shell_out(
-<<<<<<< HEAD
-                            %Q[ unzip "#{Chef::Config[:file_cache_path]}/#{tarball_name}" -d "#{tmpdir}" ]
-=======
                             %Q[ unzip "#{Chef::Config[:file_cache_path]}/#{tarball_name}" -d "#{Chef::Config[:file_cache_path]}" ]
->>>>>>> upstream/master
                                   )
          unless cmd.exitstatus == 0
            Chef::Application.fatal!("Failed to extract file #{tarball_name}!")
          end
        when /^.*\.(tar.gz|tgz)/
          cmd = shell_out(
-<<<<<<< HEAD
-                            %Q[ tar xvzf "#{Chef::Config[:file_cache_path]}/#{tarball_name}" -C "#{tmpdir}" ]
-=======
                             %Q[ tar xvzf "#{Chef::Config[:file_cache_path]}/#{tarball_name}" -C "#{Chef::Config[:file_cache_path]}" ]
->>>>>>> upstream/master
                                   )
          unless cmd.exitstatus == 0
            Chef::Application.fatal!("Failed to extract file #{tarball_name}!")
@@ -182,11 +161,7 @@ action :install do
        end
 
        cmd = shell_out(
-<<<<<<< HEAD
-                          %Q[ mv "#{tmpdir}/#{app_dir_name}" "#{app_dir}" ]
-=======
                           %Q[ mv "#{Chef::Config[:file_cache_path]}/#{app_dir_name}" "#{app_dir}" ]
->>>>>>> upstream/master
                                 )
        unless cmd.exitstatus == 0
            Chef::Application.fatal!(%Q[ Command \' mv "#{Chef::Config[:file_cache_path]}/#{app_dir_name}" "#{app_dir}" \' failed ])

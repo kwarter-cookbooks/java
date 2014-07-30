@@ -2,8 +2,6 @@ Java Cookbook CHANGELOG
 =======================
 This file is used to list changes made in each version of the Java cookbook.
 
-<<<<<<< HEAD
-=======
 v1.24.0 - 7/25/2014
 -------
 New Cookbook maintainer! **[Agile Orbit](http://agileorbit.com)**
@@ -104,7 +102,6 @@ v1.17.4
 - **[COOK-4165](https://tickets.opscode.com/browse/COOK-4165)** - Replace curl with remote_file with cookie header
 - **[#110](https://github.com/socrata-cookbooks/java/pull/110)** - Update openjdk to use the alternatives resource
 
->>>>>>> upstream/master
 v1.17.2
 -------
 ### Bug

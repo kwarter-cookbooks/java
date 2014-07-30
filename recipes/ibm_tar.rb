@@ -50,12 +50,8 @@ end
 
 java_alternatives 'set-java-alternatives' do
   java_location node['java']['java_home']
-<<<<<<< HEAD
-  case node['java']['jdk_version']
-=======
   default node['java']['set_default']
   case node['java']['jdk_version'].to_s
->>>>>>> upstream/master
   when "6"
     bin_cmds node['java']['ibm']['6']['bin_cmds']
   when "7"
